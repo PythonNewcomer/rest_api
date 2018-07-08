@@ -1,3 +1,6 @@
+# Hiding DB config containing sensitive info
+config.ini
+
 # Ignoring useless files
 .idea/
 __pycache__/
