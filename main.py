@@ -45,7 +45,20 @@ def add_country():
 
 @app.route('/countries', methods=['PUT'])
 def update_country():
-    pass
+    data = loads(request.data)
+    id = data['id']
+    name = data['name']
+    continent = data['continent']
+    select_script = 'SELECT id, name, continent FROM public.countries WHERE id = {}'.format(id)
+    result = db.execute_select(select_script)
+    dic = {}
+    if len(result) == 0:
+        dic['message'] = 'Country Not Found'
+    else:
+        update_script = "UPDATE public.countries SET name = '{0}', continent = '{1}' WHERE id = {2}".format(name, continent, id)
+        db.execute_script(update_script)
+        dic['message'] = 'Country Was Updated'
+    return jsonify(dic)
 
 
 if __name__ == '__main__':
