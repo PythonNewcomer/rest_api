@@ -1,5 +1,5 @@
 from psycopg2 import connect
-
+from json import dumps
 
 class DatabaseHelper(object):
 
@@ -19,3 +19,24 @@ class DatabaseHelper(object):
         cur.execute(script)
         rows = cur.fetchall()
         return rows
+
+    def transform_dataset_into_json(self, result):
+        list = []
+        for row in result:
+            dic = {}
+            dic['id'] = row[0]
+            dic['country'] = row[1]
+            dic['continent'] = row[2]
+            list.append(dic)
+        return dumps(list)
+
+    def transform_row_into_json(self, result):
+        row = result[0]
+        dic = {}
+        dic['id'] = row[0]
+        dic['country'] = row[1]
+        dic['continent'] = row[2]
+        return dumps(dic)
+
+    def close_connection(self):
+        self.conn.close()
