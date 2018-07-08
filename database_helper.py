@@ -31,7 +31,7 @@ class DatabaseHelper(object):
         return dumps(list)
 
     def transform_row_into_json(self, result):
-        row = result[0]
+        row = result[0] # result returns list even if it consists of one tuple only
         dic = {}
         dic['id'] = row[0]
         dic['country'] = row[1]

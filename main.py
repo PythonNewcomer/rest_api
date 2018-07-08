@@ -18,6 +18,15 @@ def get_country(id):
     result = db.execute_select(script)
     return db.transform_row_into_json(result)
 
+
+@app.route('/countries/<id>', methods=['DELETE'])
+def delete_country(id):
+    script = 'DELETE FROM public.countries WHERE id = {}'.format(id)
+    db.execute_script(script)
+    message = 'Country {} was deleted'.format(id)
+    dic = {'message': message}
+    return jsonify(dic)
+
 # db.close_connection()
 
 if __name__ == '__main__':
